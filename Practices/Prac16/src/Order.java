@@ -1,101 +1,23 @@
-public class Order {
-    private int size;
-    private Item[] items = new Item[size];
+interface Order {
+    int size = 0;
+    Item[] items = new Item[size];
 
-    public Order() {
-        items[0] = new Dish("head", "firstItem");
-    }
 
-    public Order(Item[] items) {
-        this.items = items;
-        this.size = items.length;
-    }
+    public boolean add(Item insertedItem);
 
-    public boolean add(Item insertedItem) {
-        Item[] newItems = new Item[items.length+1];
-        System.arraycopy(items, 0, newItems, 0, items.length);
-        try {
-            newItems[items.length] = insertedItem;
-            items = newItems;
-            return true;
-        }
-        catch (Exception e) {
-            return false;
-        }
-    }
+    public boolean remove(String itemName);
 
-    public boolean remove(String itemName) {
-        Item[] newItems = new Item[items.length-1];
-        int j = 0;
-        boolean flag = false;
-        for (int i = items.length-1; i>-1;i--) {
-            if (!(items[i].getName().equals(itemName)) | !flag) {
-                newItems[j] = items[i];
-                j++;
-                flag = true;
-            }
-        }
-        for (int i = 0; i <  newItems.length / 2; i++) {
-            Item temp = newItems[i];
-            newItems[i] = newItems[newItems.length - 1 - i];
-            newItems[newItems.length - 1 - i] = temp;
-        }
-        items = newItems;
-        return true;
-    }
+    public int removeAll(String itemName);
 
-    public int removeAll(String itemName) {
-        int j = 0, count = 0;
+    public int itemQuantity(String itemName);
 
-        for (Item item : items) {
-            if (!(item.getName().equals(itemName))) {
-                count++;
-            }
-        }
-        Item[] newItems = new Item[count];
-        for (Item item : items) {
-            if (!(item.getName().equals(itemName))) {
-                newItems[j] = item;
-                j++;
-            }
-        }
-        items = newItems;
-        return count;
-    }
+    public int itemQuantity();
 
-    public int itemQuantity(String itemName) {
-        int quantity = 0;
-        for (Item item : items) {
-            if (item.getName().equals(itemName)) {
-                quantity++;
-            }
-        }
-        return quantity;
-    }
+    public Item[] getItems();
 
-    public int itemQuantity() {
-        return items.length;
-    }
+    public double getTotal();
 
-    public Item[] getItems() {
-        return items;
-    }
+    public String[] dishesNames();
 
-    public double getTotal() {
-        double total = 0;
-        for (Item item: items) {
-            total+=item.getPrice();
-        }
-        return total;
-    }
-
-    public String[] dishesNames() {
-        String[] names = null;
-        return names;
-    }
-
-    public Item[] sortedDishesByCostDesc() {
-        Item[] items = null;
-        return items;
-    }
+    public Item[] sortedDishesByCostDesc();
 }
